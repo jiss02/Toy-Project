@@ -1,4 +1,9 @@
 
 ### Custom ###
-temp/*
-config/*
+
+.DS_Store
+temp/
+config/
+node_modules/
+
+###############
