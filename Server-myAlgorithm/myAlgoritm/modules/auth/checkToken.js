@@ -1,7 +1,7 @@
 var jwt = require('./jwt');
 
-const resMessage = require('./responseMessage');
-const statusCode = require('./statusCode');
+const resMessage = require('../utils/responseMessage');
+const statusCode = require('../utils/statusCode');
 const util = require('../utils/authUtils');
 
 const checkToken = {

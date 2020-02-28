@@ -2,7 +2,7 @@
 // resolve와 reject로 나누어지기 때문에 result를 상수로 선언이 가능해진다.
 // 에러가 발생하면 다음으로 에러를 넘긴다.
 
-const poolPromise = require('../config/dbPool');
+const poolPromise = require('../../config/dbPool');
 module.exports = {
     queryParam_None: async (query) => {
         return new Promise(async (resolve, reject) => {
