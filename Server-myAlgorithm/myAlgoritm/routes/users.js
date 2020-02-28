@@ -4,12 +4,12 @@ const userController = require('../controllers/userController');
 const checkToken = require('../modules/auth/checkToken');
 
 // userIdx 보안 문제상 토큰 내부에
-router.post('', userController.signup);
+router.post('/', userController.create);
 router.post('/signin', userController.signin);
 
-router.user('', checkToken.isLoggedin);
-router.get('', userController.read);
-router.put('', userController.update);
-router.delete('', userController.delete);
+router.use('/', checkToken.isLoggedin);
+router.get('/', userController.read);
+router.put('/', userController.update);
+router.delete('/', userController.delete);
 
 module.exports = router;
