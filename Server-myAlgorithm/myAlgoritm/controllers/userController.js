@@ -6,9 +6,8 @@ const emptyParameter = require('../modules/utils/emptyParameter');
 module.exports = {
     create: (req, res) => {
         const { id, password, nickname, email, prefer } = req.body;
-        console.log(req.body);
         if(!id || !password || !nickname || !email || !prefer){
-            const missParameter = emptyParameter({ id, password, nickname, email, prefer });
+            const missParameter = emptyParameter(req.body);
             res.status(sc.OK)
             .send(au.successFalse(sc.NO_CONTENT, rm.NULL_VALUE_X(missParameter)));
             return;
