@@ -5,12 +5,12 @@ const { secretOrPrivateKey } = require("../../config/secretKey");
 const options = {
     algorithm: "HS256",
     expiresIn: "1w",
-    issuer: "jungah"
+    issuer: "hyun"
 };
 const refreshOptions = {
     algorithm: "HS256",
     expiresIn: "2w",
-    issuer: "jungah"
+    issuer: "hyun"
 };
 
 module.exports = {
@@ -18,7 +18,6 @@ module.exports = {
         const payload = {
             idx: user.userIdx,
         };
-
         const result = {
             token: jwt.sign(payload, secretOrPrivateKey, options),
             refreshToken: randtoken.uid(256)
