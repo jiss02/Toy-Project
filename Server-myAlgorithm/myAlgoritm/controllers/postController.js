@@ -1,5 +1,5 @@
-const { au, rm, sc } = require("../modules/utils")
-const Post = require("../models/Post")
+const { au, rm, sc } = require('../modules/utils');
+const Post = require('../models/Post');
 const emptyParameter = require('../modules/utils/emptyParameter');
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
         if(!lanIdx || !title || !code || !describe || !thought){
             const missParameter = await emptyParameter(req.body);
             res.status(sc.OK)
-            .send(au.successFalse(sc.NO_CONTENT, rm.NULL_VALUE_X(missParameter)))
+            .send(au.successFalse(sc.NO_CONTENT, rm.NULL_VALUE_X(missParameter)));
             return;
         }
         Post.create()
@@ -16,7 +16,7 @@ module.exports = {
         .catch(err => {
             console.log(err);
             res.status(sc.INTERNAL_SERVER_ERROR)
-            .send(au.successFalse(sc.INTERNAL_SERVER_ERROR,rm.INTERNAL_SERVER_ERROR))
+            .send(au.successFalse(sc.INTERNAL_SERVER_ERROR,rm.INTERNAL_SERVER_ERROR));
         });
     },
     readAll: (req, res) => {
@@ -25,7 +25,7 @@ module.exports = {
         .caych(err => {
             console.log(err);
             res.status(sc.INTERNAL_SERVER_ERROR)
-            .send(au.successFalse(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR))
+            .send(au.successFalse(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR));
         });
     },
     read: (req, res) => {
@@ -35,7 +35,7 @@ module.exports = {
         .catch(err => {
             console.log(err);
             res.status(sc.INTERNAL_SERVER_ERROR)
-            send(au.successFalse(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR))
+            send(au.successFalse(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR));
         });
     },
     update: async (req, res) => {
@@ -44,7 +44,7 @@ module.exports = {
         if(!lanIdx || !title || !code || !describe || !thought){
             const missParameter = await missParameter(req.body);
             res.status(sc.OK)
-            .send(au.successFalse(sc.NO_CONTENT, rm.NULL_VALUE_X(missParameter)))
+            .send(au.successFalse(sc.NO_CONTENT, rm.NULL_VALUE_X(missParameter)));
             return;
         }
         Post.update(postIdx)
@@ -52,7 +52,7 @@ module.exports = {
         .catch(err => {
             console.log(err);
             res.status(sc.INTERNAL_SERVER_ERROR)
-            .send(au.successFalse(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR))
+            .send(au.successFalse(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR));
         });
     },
     delete: (req, res) => {
@@ -62,7 +62,7 @@ module.exports = {
         .catch(err => {
             console.log(err);
             res.status(sc.INTERNAL_SERVER_ERROR)
-            .send(au.successFalse(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR))
+            .send(au.successFalse(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR));
         });
     }
 }
