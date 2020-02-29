@@ -5,11 +5,13 @@ module.exports = {//서버들끼리의 원활한 소통을 위해서 응답메�
     NOT_MATCH: "작성자와 일치하지 않습니다",
 
     REFRESH_UPDATE_ERROR:'refresh update fail',
-    EMPTY_TOKEN:'토큰이 없습니다.',
-    EXPRIED_TOKEN:'만료된 토큰입니다.',
-    INVALID_TOKEN:'잘못된 형식의 토큰입니다.',
+    EMPTY_TOKEN:'토큰이 없습니다',
+    EXPRIED_TOKEN:'만료된 토큰입니다',
+    INVALID_TOKEN:'잘못된 형식의 토큰입니다',
     REFRESH_TOKEN:'토큰 발급 완료!',
 
+    X_SUCCESS: (x) => `${x} 성공`, 
+    X_FAIL: (x) => `${x} 실패`,
     X_CREATE_SUCCESS: (x) => `${x} 작성 성공`,
     X_CREATE_FAIL: (x) => `${x} 작성 실패`,
     X_READ_ALL_SUCCESS: (x) => `${x} 전체 조회 성공`,
@@ -20,6 +22,7 @@ module.exports = {//서버들끼리의 원활한 소통을 위해서 응답메�
     X_UPDATE_FAIL: (x) => `${x} 수정 실패`,
     X_DELETE_SUCCESS: (x) => `${x} 삭제 성공`,
     X_DELETE_FAIL: (x) => `${x} 삭제 실패`,  
-    X_EMPTY: (x) => `존재하지 않는 ${x} 입니다.`,
-    ALREADY_X: (x) => `존재하는 ${x} 입니다.`,
+    X_EMPTY: (x) => `존재하지 않는 ${x} 입니다`,
+    ALREADY_X: (x) => `존재하는 ${x} 입니다`,
+    X_NOT_MATCH: (x) => `일치하지 않는 ${x} 입니다`,
 };
