@@ -25,7 +25,7 @@ module.exports = {
                 };
             }
             throw err;
-        })
+        });
         if(userInsertResult.code && userInsertResult.json) return userInsertResult;
         // 트랜잭션으로 처리했어야 했을까?
         fields = 'userIdx, langIdx';
@@ -62,7 +62,7 @@ module.exports = {
                 };
             }
             const token = jwt.sign(user).token;
-            const resData = { token }
+            const resData = { token };
             return {
                 code: sc.OK,
                 json: au.successTrue(sc.OK, rm.X_SUCCESS('로그인'), resData)
