@@ -4,10 +4,10 @@ const User = require('../models/User');
 const emptyParameter = require('../modules/utils/emptyParameter');
 
 module.exports = {
-    create: (req, res) => {
+    create: async (req, res) => {
         const { id, password, nickname, email, prefer } = req.body;
         if(!id || !password || !nickname || !email || !prefer){
-            const missParameter = emptyParameter(req.body);
+            const missParameter = await emptyParameter(req.body);
             res.status(sc.OK)
             .send(au.successFalse(sc.NO_CONTENT, rm.NULL_VALUE_X(missParameter)));
             return;
@@ -21,8 +21,21 @@ module.exports = {
             .send(au.successFalse(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR));
         })
     },
-    signin: () => {
-
+    signin: async (req, res) => {
+        const { id, password } = req.body;
+        if(!id || !password){
+            const missParameter = await emptyParameter(req.body);
+            res.status(sc.OK)
+            .send(au.successFalse(sc.NO_CONTENT, rm.NULL_VALUE_X(missParameter)));
+            return;
+        }
+        User.signin({ id, password })
+        .then(({ code, json }) => res.status(code).send(json))
+        .catch(err => {
+            console.log(err);
+            res.status(sc.INTERNAL_SERVER_ERROR)
+            .send(au.successFalse(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR));
+        });
     },
     read: () => {
 
