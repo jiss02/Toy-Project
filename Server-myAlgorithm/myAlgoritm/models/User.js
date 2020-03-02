@@ -44,35 +44,31 @@ module.exports = {
         };
     },
 
-    signin: ({ id, password }) => {
+    signin: async ({ id, password }) => {
         let sql = `SELECT * FROM ${TABLE} WHERE id = ${id};`;
-        const signinResult = pool.queryParam_None(sql)
-        .then( async result => {
-            if(result.length == 0){
-                return {
-                    code: sc.OK,
-                    json: au.successFalse(sc.BAD_REQUEST, rm.X_EMPTY('user'))
-                };
-            }
-            const user = result[0];
-            const { salt, hashed } = await encrypt.encryptWithSalt(password, user.salt);
-            if (hashed != user.password){
-                return {
-                    code:sc.OK,
-                    json: au.successFalse(sc.BAD_REQUEST,rm.X_NOT_MATCH('password'))
-                };
-            }
-            const token = jwt.sign(user).token;
-            const resData = { token };
+        const signinResult = await pool.queryParam_None(sql)
+        .then(result => result)
+        .catch(err => { throw err });
+        if(signinResult.length == 0){
             return {
                 code: sc.OK,
-                json: au.successTrue(sc.OK, rm.X_SUCCESS('로그인'), resData)
+                json: au.successFalse(sc.BAD_REQUEST, rm.X_EMPTY('user'))
             };
-        })
-        .catch(err => {
-            throw err;
-        });
-        return signinResult;
+        }
+        const user = signinResult[0];
+        const { salt, hashed } = await encrypt.encryptWithSalt(password, user.salt);
+        if (hashed != user.password){
+            return {
+                code:sc.OK,
+                json: au.successFalse(sc.BAD_REQUEST,rm.X_NOT_MATCH('password'))
+            };
+        }
+        const token = jwt.sign(user).token;
+        const resData = { token };
+        return {
+            code: sc.OK,
+            json: au.successTrue(sc.OK, rm.X_SUCCESS('로그인'), resData)
+        };
     },
 
     read: async (userIdx) => {
