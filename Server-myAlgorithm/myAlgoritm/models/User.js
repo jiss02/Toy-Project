@@ -43,6 +43,7 @@ module.exports = {
             json: au.successTrue(sc.CREATED, rm.X_CREATE_SUCCESS(TABLE), userInsertResult.inserId)
         };
     },
+
     signin: ({ id, password }) => {
         let sql = `SELECT * FROM ${TABLE} WHERE id = ${id};`;
         const signinResult = pool.queryParam_None(sql)
@@ -73,4 +74,21 @@ module.exports = {
         });
         return signinResult;
     },
+
+    read: async (userIdx) => {
+        let userSql = `SELECT * FROM ${TABLE} WHERE userIdx = ${userIdx}`;
+        let innerSql = `SELECT langIdx FROM ${SUBTABLE} WHERE userIdx = ${userIdx}`;
+        let preferlangSql = `SELECT * FROM language WHERE langIdx IN (${innerSql})`;
+        const userReadResult = await pool.queryParam_None(userSql)
+        .then(result => result[0])
+        .catch(err => { throw err });
+        const userLangResult = await pool.queryParam_None(preferlangSql)
+        .catch(err => { throw err });
+        userReadResult['prefer_lang'] = userLangResult;
+        const resData = userReadResult;
+        return {
+            code: sc.OK,
+            json: au.successTrue(sc.OK, rm.X_READ_SUCCESS(TABLE), resData)
+        };
+    }
 }
