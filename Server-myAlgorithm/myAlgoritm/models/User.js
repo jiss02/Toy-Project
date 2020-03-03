@@ -12,9 +12,7 @@ module.exports = {
         let sql = `INSERT INTO ${TABLE}(${fields}) VALUES(?,?,?,?,?);`;
         let values = [id, password, salt, nickname, email];
         const userInsertResult = await pool.queryParam_Parse(sql, values)
-        .then(result => {
-            return result.insertId;
-        })
+        .then(result => { return result.insertId })
         .catch(err => {
             if(err.errno == 1062) {
                 console.log(err.errno, err.code);
@@ -33,10 +31,7 @@ module.exports = {
         for(i = 0; i < prefer.length; i++){
             values = [userInsertResult, prefer[i]];
             await pool.queryParam_Parse(sql, values)
-            .catch(err => {
-                console.log(err);
-                throw err;
-            });
+            .catch(err => { throw err });
         }
         return {
             code: sc.OK,
@@ -56,15 +51,19 @@ module.exports = {
             };
         }
         const user = signinResult[0];
+        sql = `SELECT L.langIdx, name FROM prefer_lang P INNER JOIN language L ON P.langIdx = L.langIdx WHERE userIdx = ${user.userIdx}`;
+        const prefer = await pool.queryParam_None(sql)
+        .then(result => result)
+        .catch(err => { throw err });
         const { salt, hashed } = await encrypt.encryptWithSalt(password, user.salt);
-        if (hashed != user.password){
+        if(hashed != user.password){
             return {
                 code:sc.OK,
                 json: au.successFalse(sc.BAD_REQUEST,rm.X_NOT_MATCH('password'))
             };
         }
         const token = jwt.sign(user).token;
-        const resData = { token };
+        const resData = { token, prefer };
         return {
             code: sc.OK,
             json: au.successTrue(sc.OK, rm.X_SUCCESS('로그인'), resData)
