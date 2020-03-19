@@ -12,7 +12,7 @@ Node.js
 
 ## ERD
 
-![ERG 이미지](/Users/hyun/Desktop/Toy-Project/Server-myAlgorithm/img/ERD.png)
+![ERG 이미지](./img/ERD.png)
 
 ## API 
 
