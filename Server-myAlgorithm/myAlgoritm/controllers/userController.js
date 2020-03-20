@@ -47,8 +47,21 @@ module.exports = {
             .send(au.successFalse(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR));
         })
     },
-    update: () => {
-
+    update: async (req, res) => {
+        const userIdx = req.decoded.idx;
+        const { nickname, email } = req.body;
+        if(!nickname || !email){
+            const missParameter = await emptyParameter(req.body);
+            res.status(sc.OK)
+            .send(au.successFalse(sc.NO_CONTENT, rm.NULL_VALUE_X(missParameter)));
+        }
+        User.update({ userIdx, nickname, email })
+        .then(({ code, json }) => res.status(code).send(json))
+        .catch(err => {
+            console.log(err);
+            res.status(sc.INTERNAL_SERVER_ERROR)
+            .send(au.successFalse(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR));
+        });
     },
     delete: () => {
 

@@ -85,5 +85,16 @@ module.exports = {
             code: sc.OK,
             json: au.successTrue(sc.OK, rm.X_READ_SUCCESS(TABLE), resData)
         };
+    },
+
+    update: async ({ userIdx, nickname, email }) => {
+        let userUpdateSql = `UPDATE ${TABLE} SET nickname='${nickname}', email='${email}' WHERE userIdx=${userIdx}`;
+        const userUpdateResult = await pool.queryParam_None(userUpdateSql)
+        .then(result => result)
+        .catch(err => { throw err });
+        return {
+            code: sc.OK,
+            json: au.successTrue(sc.OK, rm.X_UPDATE_SUCCESS(TABLE))
+        }
     }
 }
