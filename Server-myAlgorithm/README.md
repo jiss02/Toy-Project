@@ -26,7 +26,6 @@ Node.js
 | /users        | POST   | 회원가입          | O        |
 | /users        | GET    | 마이페이지        | O        |
 | /users/signin | POST   | 로그인            | O        |
-| /users/logout | GET    | 로그아웃          |          |
 | /users        | DELETE | 회원탈퇴          |          |
-| /users        | PUT    | 정보수정          |          |
+| /users        | PUT    | 정보수정          | O         |
 

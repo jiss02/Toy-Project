@@ -63,7 +63,15 @@ module.exports = {
             .send(au.successFalse(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR));
         });
     },
-    delete: () => {
+    delete: (req, res) => {
+        const userIdx = req.decoded.idx;
+        User.delete(userIdx)
+        .then(({ code, json }) => res.status(code).send(json))
+        .catch(err => {
+            console.log(err);
+            res.status(sc.INTERNAL_SERVER_ERROR)
+            .send(au.successFalse(sc.INTERNAL_SERVER_ERROR, rm.INTERNAL_SERVER_ERROR));
+        })
 
     }
 }

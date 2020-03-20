@@ -88,13 +88,26 @@ module.exports = {
     },
 
     update: async ({ userIdx, nickname, email }) => {
-        let userUpdateSql = `UPDATE ${TABLE} SET nickname='${nickname}', email='${email}' WHERE userIdx=${userIdx}`;
-        const userUpdateResult = await pool.queryParam_None(userUpdateSql)
+        let userUpdateSql = `UPDATE ${TABLE} SET nickname=?, email=? WHERE userIdx=?`;
+        let values = [nickname, email, userIdx]
+        const userUpdateResult = await pool.queryParam_Parse(userUpdateSql, values)
         .then(result => result)
         .catch(err => { throw err });
         return {
             code: sc.OK,
             json: au.successTrue(sc.OK, rm.X_UPDATE_SUCCESS(TABLE))
         }
+    },
+
+    delete: async (userIdx) => {
+        let userDeleteSql = `DELETE FROM ${TABLE} WHERE userIdx=${userIdx}`;
+        const userDeleteResult = await pool.queryParam_None(userDeleteSql)
+        .then(result => result)
+        .catch(err => { throw err });
+        return {
+            code: sc.OK,
+            json: au.successTrue(sc.OK, rm.X_DELETE_SUCCESS(TABLE))
+        }
+
     }
 }
